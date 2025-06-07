@@ -23,16 +23,12 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<?> registrarUsuario(@Valid @RequestBody UsuarioRequest request) {
-        try {
-            Usuario usuario = requestMapper.toDomain(request);
-            Usuario registrado = usuarioService.registrarUsuario(usuario);
-            UsuarioResponse response = responseMapper.toResponse(registrado);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new ErrorResponse("El correo ya registrado"));
-        }
+        Usuario usuario = requestMapper.toDomain(request);
+        Usuario registrado = usuarioService.registrarUsuario(usuario);
+        UsuarioResponse response = responseMapper.toResponse(registrado);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
 
     record ErrorResponse(String mensaje) {}
 }
