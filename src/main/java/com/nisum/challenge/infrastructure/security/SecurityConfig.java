@@ -4,16 +4,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+	private final JwtUtil jwtUtil;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable()).headers(headers -> headers.frameOptions().disable()) // ← necesario para H2
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/users").permitAll()
-						.requestMatchers("/h2-console/**").permitAll() // ← permite consola H2
-						.anyRequest().authenticated());
+		http.csrf(csrf -> csrf.disable()).headers(headers -> headers.frameOptions(frame -> frame.disable()))
+				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/users", "/api/users/login", "/h2-console/**")
+						.permitAll().anyRequest().authenticated())
+				.addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
