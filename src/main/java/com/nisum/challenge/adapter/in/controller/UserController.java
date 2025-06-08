@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nisum.challenge.adapter.in.mapper.UsuarioRequestMapper;
-import com.nisum.challenge.adapter.in.mapper.UsuarioResponseMapper;
+import com.nisum.challenge.adapter.in.mapper.UserRequestMapper;
+import com.nisum.challenge.adapter.in.mapper.UserResponseMapper;
 import com.nisum.challenge.domain.model.User;
 import com.nisum.challenge.domain.service.UserService;
 import com.nisum.challenge.dto.UserActiveStatusRequest;
@@ -29,8 +29,8 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
-	private final UsuarioRequestMapper requestMapper;
-	private final UsuarioResponseMapper responseMapper;
+	private final UserRequestMapper requestMapper;
+	private final UserResponseMapper responseMapper;
 
 	@PostMapping
 	public ResponseEntity<?> registrarUsuario(@Valid @RequestBody UserRequest request) {

@@ -5,7 +5,7 @@ import com.nisum.challenge.dto.UserResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UsuarioResponseMapper {
+public class UserResponseMapper {
 
     public UserResponse toResponse(User user) {
         UserResponse response = new UserResponse();

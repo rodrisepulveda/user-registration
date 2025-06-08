@@ -10,29 +10,29 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class UsuarioRequestMapper {
+public class UserRequestMapper {
 
     public User toDomain(UserRequest request) {
-        User usuario = new User();
-        usuario.setName(request.getName());
-        usuario.setEmail(request.getEmail());
-        usuario.setPassword(request.getPassword());
+        User user = new User();
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
 
         if (request.getPhones() != null) {
             List<Phone> phones = request.getPhones().stream()
                     .map(this::mapTelefono)
                     .collect(Collectors.toList());
-            usuario.setPhones(phones);
+            user.setPhones(phones);
         }
 
-        return usuario;
+        return user;
     }
 
     private Phone mapTelefono(PhoneRequest request) {
-        Phone telefono = new Phone();
-        telefono.setNumber(request.getNumber());
-        telefono.setCitycode(request.getCitycode());
-        telefono.setContrycode(request.getContrycode());
-        return telefono;
+        Phone phone = new Phone();
+        phone.setNumber(request.getNumber());
+        phone.setCitycode(request.getCitycode());
+        phone.setContrycode(request.getContrycode());
+        return phone;
     }
 }
