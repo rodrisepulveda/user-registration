@@ -8,4 +8,7 @@ public interface UserService {
 	User registrarUsuario(User usuario);
 
 	User updateActiveStatus(UUID id, boolean isActive);
+
+	User getById(UUID id);
+
 }

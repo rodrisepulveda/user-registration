@@ -52,4 +52,10 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 	}
 
+	@Override
+	public User getById(UUID id) {
+		return userRepository.findById(id)
+				.orElseThrow(() -> new NotFoundException("User with ID " + id + " not found"));
+	}
+
 }

@@ -1,25 +1,26 @@
 package com.nisum.challenge.adapter.in.mapper;
 
-import com.nisum.challenge.domain.model.Phone;
-import com.nisum.challenge.domain.model.User;
-import com.nisum.challenge.dto.PhoneRequest;
-import com.nisum.challenge.dto.UserRequest;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
+
+import com.nisum.challenge.domain.model.Phone;
+import com.nisum.challenge.domain.model.User;
+import com.nisum.challenge.dto.CreateUserRequest;
+import com.nisum.challenge.dto.PhoneRequest;
 
 @Component
 public class UserRequestMapper {
 
-    public User toDomain(UserRequest request) {
+    public User toDomain(CreateUserRequest request) {
         User user = new User();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setName(request.name());
+        user.setEmail(request.email());
+        user.setPassword(request.password());
 
-        if (request.getPhones() != null) {
-            List<Phone> phones = request.getPhones().stream()
+        if (request.phones() != null) {
+            List<Phone> phones = request.phones().stream()
                     .map(this::mapTelefono)
                     .collect(Collectors.toList());
             user.setPhones(phones);
@@ -31,8 +32,8 @@ public class UserRequestMapper {
     private Phone mapTelefono(PhoneRequest request) {
         Phone phone = new Phone();
         phone.setNumber(request.getNumber());
-        phone.setCitycode(request.getCitycode());
-        phone.setContrycode(request.getContrycode());
+        phone.setCityCode(request.getCitycode());
+        phone.setCountryCode(request.getContrycode());
         return phone;
     }
 }

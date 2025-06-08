@@ -3,6 +3,8 @@ package com.nisum.challenge.infrastructure.exception;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +12,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.nisum.challenge.adapter.in.controller.UserController;
 import com.nisum.challenge.domain.exception.AuthenticationException;
 import com.nisum.challenge.domain.exception.EmailAlreadyExistsException;
 import com.nisum.challenge.domain.exception.NotFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+	
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	@ExceptionHandler(EmailAlreadyExistsException.class)
 	public ResponseEntity<Map<String, String>> handleEmailAlreadyExists(EmailAlreadyExistsException ex) {
@@ -24,6 +29,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Map<String, String>> handleGeneric(Exception ex) {
+		log.error("Internal Server Error. ", ex);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 				.body(Map.of("mensaje", "Ha ocurrido un error inesperado."));
 	}

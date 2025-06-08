@@ -17,11 +17,18 @@ public class SecurityConfig {
 	private final JwtUtil jwtUtil;
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable()).headers(headers -> headers.frameOptions(frame -> frame.disable()))
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/users", "/api/users/login", "/h2-console/**")
-						.permitAll().anyRequest().authenticated())
-				.addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+	public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationEntryPoint authEntryPoint)
+			throws Exception {
+		http.csrf(csrf -> csrf.disable());
+
+		http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
+
+		http.authorizeHttpRequests(auth -> auth.requestMatchers("/api/users", "/api/users/login", "/h2-console/**")
+				.permitAll().anyRequest().authenticated());
+
+		http.addFilterBefore(new JwtAuthenticationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
+		http.exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint));
 
 		return http.build();
 	}
