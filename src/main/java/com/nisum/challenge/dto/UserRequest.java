@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UsuarioRequest {
+public class UserRequest {
 
 	@NotBlank(message = "El nombre es obligatorio")
 	private String name;
@@ -28,5 +28,5 @@ public class UsuarioRequest {
 
 	@NotNull(message = "La lista de teléfonos no puede ser nula")
 	@Size(min = 1, message = "Debe ingresar al menos un teléfono")
-	private List<TelefonoRequest> phones;
+	private List<PhoneRequest> phones;
 }

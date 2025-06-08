@@ -1,14 +1,14 @@
 package com.nisum.challenge.adapter.in.mapper;
 
-import com.nisum.challenge.domain.model.Usuario;
-import com.nisum.challenge.dto.UsuarioResponse;
+import com.nisum.challenge.domain.model.User;
+import com.nisum.challenge.dto.UserResponse;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UsuarioResponseMapper {
 
-    public UsuarioResponse toResponse(Usuario usuario) {
-        UsuarioResponse response = new UsuarioResponse();
+    public UserResponse toResponse(User usuario) {
+        UserResponse response = new UserResponse();
         response.setId(usuario.getId());
         response.setCreated(usuario.getCreated());
         response.setModified(usuario.getModified());

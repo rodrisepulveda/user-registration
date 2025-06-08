@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class UsuarioResponse {
+public class UserResponse {
 
     private UUID id;
     private LocalDateTime created;

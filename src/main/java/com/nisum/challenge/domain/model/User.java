@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Usuario {
+public class User {
 
 	private UUID id;
 	private String name;
