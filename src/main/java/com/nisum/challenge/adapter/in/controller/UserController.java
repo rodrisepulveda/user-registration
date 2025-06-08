@@ -2,6 +2,8 @@ package com.nisum.challenge.adapter.in.controller;
 
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nisum.challenge.adapter.in.mapper.UserRequestMapper;
@@ -57,6 +60,16 @@ public class UserController {
 	public ResponseEntity<UserDetailsResponse> getUserById(@PathVariable("id") UUID id) {
 		User user = userService.getById(id);
 		UserDetailsResponse response = responseMapper.toUserDetailsResponse(user);
+		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping
+	public ResponseEntity<Page<UserDetailsResponse>> getAllUsers(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
+
+		Page<User> users = userService.getAllUsers(PageRequest.of(page, size));
+		Page<UserDetailsResponse> response = users.map(responseMapper::toUserDetailsResponse);
+
 		return ResponseEntity.ok(response);
 	}
 
