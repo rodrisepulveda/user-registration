@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Telefono {
+public class Phone {
 
 	private String number;
 	private String citycode;

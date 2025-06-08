@@ -1,6 +1,6 @@
 package com.nisum.challenge.adapter.in.mapper;
 
-import com.nisum.challenge.domain.model.Telefono;
+import com.nisum.challenge.domain.model.Phone;
 import com.nisum.challenge.domain.model.User;
 import com.nisum.challenge.dto.PhoneRequest;
 import com.nisum.challenge.dto.UserRequest;
@@ -19,7 +19,7 @@ public class UsuarioRequestMapper {
         usuario.setPassword(request.getPassword());
 
         if (request.getPhones() != null) {
-            List<Telefono> phones = request.getPhones().stream()
+            List<Phone> phones = request.getPhones().stream()
                     .map(this::mapTelefono)
                     .collect(Collectors.toList());
             usuario.setPhones(phones);
@@ -28,8 +28,8 @@ public class UsuarioRequestMapper {
         return usuario;
     }
 
-    private Telefono mapTelefono(PhoneRequest request) {
-        Telefono telefono = new Telefono();
+    private Phone mapTelefono(PhoneRequest request) {
+        Phone telefono = new Phone();
         telefono.setNumber(request.getNumber());
         telefono.setCitycode(request.getCitycode());
         telefono.setContrycode(request.getContrycode());

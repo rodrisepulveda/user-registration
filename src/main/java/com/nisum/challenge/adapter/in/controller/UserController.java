@@ -34,9 +34,9 @@ public class UserController {
 
 	@PostMapping
 	public ResponseEntity<?> registrarUsuario(@Valid @RequestBody UserRequest request) {
-		User usuario = requestMapper.toDomain(request);
-		User registrado = userService.registrarUsuario(usuario);
-		UserResponse response = responseMapper.toResponse(registrado);
+		User user = requestMapper.toDomain(request);
+		User registred = userService.registrarUsuario(user);
+		UserResponse response = responseMapper.toResponse(registred);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 

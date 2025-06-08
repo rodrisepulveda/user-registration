@@ -20,5 +20,5 @@ public class User {
 	private LocalDateTime lastLogin;
 	private String token;
 	private boolean isActive;
-	private List<Telefono> phones;
+	private List<Phone> phones;
 }

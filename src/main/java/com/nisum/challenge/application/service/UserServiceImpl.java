@@ -24,25 +24,25 @@ public class UserServiceImpl implements UserService {
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
-	public User registrarUsuario(User usuario) {
-		if (userRepository.findByEmail(usuario.getEmail()).isPresent()) {
+	public User registrarUsuario(User user) {
+		if (userRepository.findByEmail(user.getEmail()).isPresent()) {
 			throw new EmailAlreadyExistsException("El correo ya esta registrado.");
 		}
 
 		UUID id = UUID.randomUUID();
 		LocalDateTime now = LocalDateTime.now();
-		String token = jwtUtil.generateToken(id, usuario.getEmail());
+		String token = jwtUtil.generateToken(id, user.getEmail());
 
-		usuario.setId(id);
-		usuario.setCreated(now);
-		usuario.setModified(now);
-		usuario.setLastLogin(now);
-		usuario.setToken(token);
-		usuario.setActive(true);
+		user.setId(id);
+		user.setCreated(now);
+		user.setModified(now);
+		user.setLastLogin(now);
+		user.setToken(token);
+		user.setActive(true);
 
-		usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-		return userRepository.save(usuario);
+		return userRepository.save(user);
 	}
 
 	@Override

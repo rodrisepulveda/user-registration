@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsuarioResponseMapper {
 
-    public UserResponse toResponse(User usuario) {
+    public UserResponse toResponse(User user) {
         UserResponse response = new UserResponse();
-        response.setId(usuario.getId());
-        response.setCreated(usuario.getCreated());
-        response.setModified(usuario.getModified());
-        response.setLastLogin(usuario.getLastLogin());
-        response.setToken(usuario.getToken());
-        response.setActive(usuario.isActive());
+        response.setId(user.getId());
+        response.setCreated(user.getCreated());
+        response.setModified(user.getModified());
+        response.setLastLogin(user.getLastLogin());
+        response.setToken(user.getToken());
+        response.setActive(user.isActive());
         return response;
     }
 }
