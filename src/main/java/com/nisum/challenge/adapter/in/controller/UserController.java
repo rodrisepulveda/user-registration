@@ -25,6 +25,9 @@ import com.nisum.challenge.dto.UserActiveStatusResponse;
 import com.nisum.challenge.dto.UserCreatedResponse;
 import com.nisum.challenge.dto.UserDetailsResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -38,6 +41,8 @@ public class UserController {
 	private final UserResponseMapper responseMapper;
 
 	@PostMapping
+	@Operation(summary = "Create a new user", description = "Registers a new user in the system")
+	@ApiResponse(responseCode = "201", description = "User created")
 	public ResponseEntity<UserCreatedResponse> registrarUsuario(@Valid @RequestBody CreateUserRequest request) {
 		User user = requestMapper.toDomain(request);
 		User registred = userService.registrarUsuario(user);
@@ -46,6 +51,8 @@ public class UserController {
 	}
 
 	@PatchMapping("/{id}/active")
+	@Operation(summary = "Update user active status", description = "Sets a user as active or inactive")
+	@SecurityRequirement(name = "bearerAuth")
 	public ResponseEntity<UserActiveStatusResponse> updateActiveStatus(@PathVariable("id") UUID id,
 			@RequestBody UserActiveStatusRequest request) {
 
@@ -57,6 +64,8 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
+	@Operation(summary = "Get user by ID", description = "Returns user details for the given ID")
+	@SecurityRequirement(name = "bearerAuth")
 	public ResponseEntity<UserDetailsResponse> getUserById(@PathVariable("id") UUID id) {
 		User user = userService.getById(id);
 		UserDetailsResponse response = responseMapper.toUserDetailsResponse(user);
@@ -64,12 +73,13 @@ public class UserController {
 	}
 
 	@GetMapping("/list")
+	@Operation(summary = "List users", description = "Returns a paginated list of users")
+	@SecurityRequirement(name = "bearerAuth")
 	public ResponseEntity<Page<UserDetailsResponse>> getAllUsers(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {
 
 		Page<User> users = userService.getAllUsers(PageRequest.of(page, size));
 		Page<UserDetailsResponse> response = users.map(responseMapper::toUserDetailsResponse);
-
 		return ResponseEntity.ok(response);
 	}
 

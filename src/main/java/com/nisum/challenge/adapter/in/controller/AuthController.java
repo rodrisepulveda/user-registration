@@ -11,6 +11,7 @@ import com.nisum.challenge.domain.service.AuthenticationService;
 import com.nisum.challenge.dto.LoginRequest;
 import com.nisum.challenge.dto.LoginResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +23,7 @@ public class AuthController {
 	private final AuthenticationService authenticationService;
 
 	@PostMapping("/login")
+	@Operation(summary = "Authenticate user", description = "Authenticates and returns a JWT token")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
 		User usuario = authenticationService.authenticate(request.getEmail(), request.getPassword());
 		return ResponseEntity.ok(new LoginResponse(usuario.getToken()));
