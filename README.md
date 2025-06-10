@@ -145,8 +145,11 @@ Durante la ejecución local, puedes acceder a la consola web de H2 para visualiz
 	Presiona "Connect".
 	
 Una vez dentro, puedes ejecutar SQL como:
-	select * from USERS;
-	select * from PHONE;
+
+```bash
+select * from USERS;
+select * from PHONE;
+```
 	
 Las tablas estarán disponibles solo mientras la aplicación esté corriendo, ya que se trata de una base de datos en memoria.
 
