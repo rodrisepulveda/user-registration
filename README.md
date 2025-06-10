@@ -32,27 +32,7 @@ Este proyecto es una API RESTful desarrollada como parte del desafío técnico d
 Se utilizó **arquitectura hexagonal (puertos y adaptadores)** con separación clara entre controladores, lógica de dominio y persistencia.  
 Se aplicaron los **principios SOLID**, priorizando mantenibilidad, testabilidad y bajo acoplamiento.
 
-```plaintext
-              ┌────────────────────┐
-              │  UserController    │
-              └────────┬───────────┘
-                       │
-         ┌─────────────▼─────────────┐
-         │     Application Service   │ ←── Casos de uso
-         └─────────────┬─────────────┘
-                       │
-     ┌─────────────────▼────────────────┐
-     │           Domain Model           │ ←── Entidades y lógica
-     └─────────────────┬────────────────┘
-                       │
-      ┌────────────────▼────────────────┐
-      │    Mapper / Ports (Interfaces)  │
-      └────────────────┬────────────────┘
-                       │
-               ┌───────▼────────┐
-               │ Adapter (mock) │
-               └────────────────┘
-```
+![Arquitectura Hexagonal](docs/arquitectura-hexagonal.png)
 
 ## Funcionalidades Implementadas
 
