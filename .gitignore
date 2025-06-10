@@ -13,7 +13,6 @@
 *.iml
 *.iws
 *.ipr
-out/
 
 # Eclipse / Spring Tool Suite
 .project
