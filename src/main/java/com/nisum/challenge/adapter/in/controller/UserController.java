@@ -29,6 +29,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -54,7 +55,7 @@ public class UserController {
 	@Operation(summary = "Update user active status", description = "Sets a user as active or inactive")
 	@SecurityRequirement(name = "bearerAuth")
 	public ResponseEntity<UserActiveStatusResponse> updateActiveStatus(@PathVariable("id") UUID id,
-			@RequestBody UserActiveStatusRequest request) {
+			@Valid @RequestBody UserActiveStatusRequest request) {
 
 		User updatedUser = userService.updateActiveStatus(id, request.active());
 		UserActiveStatusResponse response = new UserActiveStatusResponse(updatedUser.getId(), updatedUser.getEmail(),
@@ -75,8 +76,8 @@ public class UserController {
 	@GetMapping("/list")
 	@Operation(summary = "List users", description = "Returns a paginated list of users")
 	@SecurityRequirement(name = "bearerAuth")
-	public ResponseEntity<Page<UserDetailsResponse>> getAllUsers(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size) {
+	public ResponseEntity<Page<UserDetailsResponse>> getAllUsers(@Valid @RequestParam(defaultValue = "0") @Min(0) int page,
+			@Valid @RequestParam(defaultValue = "10") @Min(1) int size) {
 
 		Page<User> users = userService.getAllUsers(PageRequest.of(page, size));
 		Page<UserDetailsResponse> response = users.map(responseMapper::toUserDetailsResponse);

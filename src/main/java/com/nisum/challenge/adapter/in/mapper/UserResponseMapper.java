@@ -11,32 +11,30 @@ import com.nisum.challenge.dto.UserDetailsResponse;
 public class UserResponseMapper {
 
 	public UserCreatedResponse toResponse(User user) {
-		UserCreatedResponse response = new UserCreatedResponse();
-		response.setId(user.getId());
-		response.setCreated(user.getCreated());
-		response.setModified(user.getModified());
-		response.setLastLogin(user.getLastLogin());
-		response.setToken(user.getToken());
-		response.setActive(user.isActive());
-		return response;
+		return new UserCreatedResponse(
+			user.getId(),
+			user.getCreated(),
+			user.getModified(),
+			user.getLastLogin(),
+			user.getToken(),
+			user.isActive()
+		);
 	}
 
 	public UserDetailsResponse toUserDetailsResponse(User user) {
-	    return new UserDetailsResponse(
-	        user.getId(),
-	        user.getName(),
-	        user.getCreated(),
-	        user.getModified(),
-	        user.getLastLogin(),
-	        user.isActive(),
-	        user.getPhones().stream()
-	            .map(phone -> new PhoneResponse(
-	                phone.getNumber(),
-	                phone.getCityCode(),
-	                phone.getCountryCode()))
-	            .toList()
-	    );
+		return new UserDetailsResponse(
+			user.getId(),
+			user.getName(),
+			user.getCreated(),
+			user.getModified(),
+			user.getLastLogin(),
+			user.isActive(),
+			user.getPhones().stream()
+				.map(phone -> new PhoneResponse(
+					phone.getNumber(),
+					phone.getCityCode(),
+					phone.getCountryCode()))
+				.toList()
+		);
 	}
-
-
 }

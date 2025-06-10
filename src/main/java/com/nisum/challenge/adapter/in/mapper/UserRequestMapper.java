@@ -13,27 +13,21 @@ import com.nisum.challenge.dto.PhoneRequest;
 @Component
 public class UserRequestMapper {
 
-    public User toDomain(CreateUserRequest request) {
-        User user = new User();
-        user.setName(request.name());
-        user.setEmail(request.email());
-        user.setPassword(request.password());
+	public User toDomain(CreateUserRequest request) {
+		return User.builder().name(request.name()).email(request.email()).password(request.password())
+				.phones(mapPhones(request.phones())).build();
+	}
 
-        if (request.phones() != null) {
-            List<Phone> phones = request.phones().stream()
-                    .map(this::mapTelefono)
-                    .collect(Collectors.toList());
-            user.setPhones(phones);
-        }
+	private List<Phone> mapPhones(List<PhoneRequest> phoneRequests) {
+		if (phoneRequests == null) {
+			return null;
+		}
 
-        return user;
-    }
+		return phoneRequests.stream().map(this::mapPhone).collect(Collectors.toList());
+	}
 
-    private Phone mapTelefono(PhoneRequest request) {
-        Phone phone = new Phone();
-        phone.setNumber(request.getNumber());
-        phone.setCityCode(request.getCitycode());
-        phone.setCountryCode(request.getContrycode());
-        return phone;
-    }
+	private Phone mapPhone(PhoneRequest request) {
+		return Phone.builder().number(request.getNumber()).cityCode(request.getCitycode())
+				.countryCode(request.getContrycode()).build();
+	}
 }

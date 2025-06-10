@@ -1,4 +1,7 @@
 package com.nisum.challenge.dto;
 
-public record UserActiveStatusRequest(boolean active) {
-}
+import jakarta.validation.constraints.NotNull;
+
+public record UserActiveStatusRequest(
+    @NotNull(message = "El campo 'active' es obligatorio") Boolean active
+) {}

@@ -1,19 +1,8 @@
 package com.nisum.challenge.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Getter
-@Setter
-public class UserCreatedResponse {
-
-    private UUID id;
-    private LocalDateTime created;
-    private LocalDateTime modified;
-    private LocalDateTime lastLogin;
-    private String token;
-    private boolean isActive;
+public record UserCreatedResponse(UUID id, LocalDateTime created, LocalDateTime modified, LocalDateTime lastLogin,
+		String token, boolean isActive) {
 }
