@@ -1,6 +1,6 @@
 package com.nisum.challenge.infrastructure.security;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.util.Map;

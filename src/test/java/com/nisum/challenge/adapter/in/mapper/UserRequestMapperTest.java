@@ -1,13 +1,15 @@
 package com.nisum.challenge.adapter.in.mapper;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.nisum.challenge.domain.model.User;
 import com.nisum.challenge.domain.model.Phone;
+import com.nisum.challenge.domain.model.User;
 import com.nisum.challenge.dto.CreateUserRequest;
 import com.nisum.challenge.dto.PhoneRequest;
 

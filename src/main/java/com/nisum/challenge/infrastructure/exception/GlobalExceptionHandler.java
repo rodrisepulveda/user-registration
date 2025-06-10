@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<Map<String, String>> handleGeneric(Exception ex) {
 		log.error("Internal Server Error. ", ex);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-				.body(Map.of("mensaje", "Ha ocurrido un error inesperado."));
+				.body(Map.of("mensaje", "An unexpected error has occurred."));
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)

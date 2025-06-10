@@ -1,6 +1,10 @@
 package com.nisum.challenge.adapter.out.persistence.mapper;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -100,4 +104,61 @@ class UserEntityMapperTest {
 		assertEquals("34", phoneEntity.getContrycode());
 		assertEquals(entity, phoneEntity.getUsers()); // Verifica asignación inversa
 	}
+	
+    @Test
+    void toDomain_conListaTelefonosNull_debeRetornarUsuarioConListaVacia() {
+        // Arrange
+        UUID id = UUID.randomUUID();
+        LocalDateTime ahora = LocalDateTime.now();
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(id);
+        userEntity.setName("Rodrigo");
+        userEntity.setEmail("rodri@correo.com");
+        userEntity.setPassword("1234");
+        userEntity.setCreated(ahora);
+        userEntity.setModified(ahora);
+        userEntity.setLastLogin(ahora);
+        userEntity.setToken("token123");
+        userEntity.setActive(true);
+        userEntity.setPhones(null); // <- caso que se quiere cubrir
+
+        // Act
+        User user = mapper.toDomain(userEntity);
+
+        // Assert
+        assertNotNull(user);
+        assertEquals(0, user.getPhones().size()); // se espera lista vacía, no null
+        assertEquals(id, user.getId());
+        assertEquals("Rodrigo", user.getName());
+    }
+    
+
+    @Test
+    void toEntity_conListaTelefonosNull_noAsignaPhones() {
+        // Arrange
+        UUID id = UUID.randomUUID();
+        LocalDateTime ahora = LocalDateTime.now();
+        User user = User.builder()
+                .id(id)
+                .name("Rodrigo")
+                .email("rodri@correo.com")
+                .password("1234")
+                .created(ahora)
+                .modified(ahora)
+                .lastLogin(ahora)
+                .token("token123")
+                .isActive(true)
+                .phones(null) // <- caso que se quiere cubrir
+                .build();
+
+        // Act
+        UserEntity entity = mapper.toEntity(user);
+
+        // Assert
+        assertNotNull(entity);
+        assertNull(entity.getPhones()); // no se asigna nada
+        assertEquals("Rodrigo", entity.getName());
+        assertEquals("rodri@correo.com", entity.getEmail());
+        assertEquals("1234", entity.getPassword());
+    }
 }

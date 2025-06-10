@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.nisum.challenge.adapter.in.mapper.UserRequestMapper;
 import com.nisum.challenge.adapter.in.mapper.UserResponseMapper;
 import com.nisum.challenge.domain.exception.NotFoundException;
+import com.nisum.challenge.domain.model.User;
 import com.nisum.challenge.domain.service.UserService;
+import com.nisum.challenge.dto.UserDetailsResponse;
 
 @WebMvcTest(UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -55,17 +58,29 @@ class UserControllerGetUserByIdTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Invalid user ID format"));
     }
-
+    
     @Test
-    void updateActiveStatus_conCampoActiveNulo_retorna400() throws Exception {
-        // Campo active faltante en el JSON
-        String body = "{}";
-        UUID userId = UUID.randomUUID();
+    void getUserById_usuarioExiste_retorna200ConDetalles() throws Exception {
+        UUID id = UUID.randomUUID();
+        User user = User.builder()
+            .id(id)
+            .name("Rodrigo")
+            .email("rodri@correo.com")
+            .isActive(true)
+            .build();
 
-        mockMvc.perform(patch("/api/users/{id}/active", userId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(body))
-                .andExpect(status().isBadRequest());
+        UserDetailsResponse response = new UserDetailsResponse(
+            id, "Rodrigo", null, null, null, true, List.of()
+        );
+
+        when(userService.getById(id)).thenReturn(user);
+        when(responseMapper.toUserDetailsResponse(user)).thenReturn(response);
+
+        mockMvc.perform(get("/api/users/" + id))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(id.toString()))
+            .andExpect(jsonPath("$.name").value("Rodrigo"))
+            .andExpect(jsonPath("$.active").value(true));
     }
     
 }
