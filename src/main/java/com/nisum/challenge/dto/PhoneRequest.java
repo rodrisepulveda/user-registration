@@ -17,9 +17,9 @@ public class PhoneRequest {
 
 	@NotBlank(message = "El código de ciudad es obligatorio")
 	@Schema(example = "2")
-	private String citycode;
+	private String cityCode;
 
 	@NotBlank(message = "El código de país es obligatorio")
 	@Schema(example = "56")
-	private String contrycode;
+	private String countryCode;
 }

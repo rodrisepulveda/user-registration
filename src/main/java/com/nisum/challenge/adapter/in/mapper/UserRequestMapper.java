@@ -27,7 +27,7 @@ public class UserRequestMapper {
 	}
 
 	private Phone mapPhone(PhoneRequest request) {
-		return Phone.builder().number(request.getNumber()).cityCode(request.getCitycode())
-				.countryCode(request.getContrycode()).build();
+		return Phone.builder().number(request.getNumber()).cityCode(request.getCityCode())
+				.countryCode(request.getCountryCode()).build();
 	}
 }
