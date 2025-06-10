@@ -93,7 +93,7 @@ class UserServiceImplUserRegisterTest {
                 () -> userService.registerUser(newUser)
         );
 
-        assertEquals("El correo ya esta registrado.", exception.getMessage());
+        assertEquals("The email is already registered.", exception.getMessage());
         verify(userRepository, never()).save(any());
     }
 }

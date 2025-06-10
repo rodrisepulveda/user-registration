@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User registerUser(User user) {
 		if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-			throw new EmailAlreadyExistsException("El correo ya esta registrado.");
+			throw new EmailAlreadyExistsException("The email is already registered.");
 		}
 
 		UUID id = UUID.randomUUID();

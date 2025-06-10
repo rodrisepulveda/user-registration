@@ -30,7 +30,7 @@ import com.nisum.challenge.dto.UserCreatedResponse;
 
 @WebMvcTest(UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
-class UserControllerCreateUserTest {
+class UserControllerUserRegisterTest {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -75,13 +75,23 @@ class UserControllerCreateUserTest {
 	}
 
 	@Test
-	void registrarUsuario_conDatosInvalidos_retorna400() throws Exception {
+	void registrarUsuario_conDatosInvalidos_retorna400YMensajesDeError() throws Exception {
+	    // Arrange
+	    CreateUserRequest requestInvalido = new CreateUserRequest(
+	            "", // name vacío
+	            "correo_invalido.com", // email sin arroba
+	            "password123", // sin mayúscula
+	            null // phones
+	    );
 
-		CreateUserRequest requestInvalido = new CreateUserRequest(null, "", "pass", null);
-
-		// Act & Assert
-		mockMvc.perform(post("/api/users").contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(requestInvalido))).andExpect(status().isBadRequest());
+	    // Act & Assert
+	    mockMvc.perform(post("/api/users")
+	            .contentType(MediaType.APPLICATION_JSON)
+	            .content(objectMapper.writeValueAsString(requestInvalido)))
+	        .andExpect(status().isBadRequest())
+	        .andExpect(jsonPath("$.name").value("El nombre es obligatorio"))
+	        .andExpect(jsonPath("$.email").value("El correo no tiene un formato válido"))
+	        .andExpect(jsonPath("$.password").value("La contraseña no cumple con el formato requerido"));
 	}
 	
     @Test
