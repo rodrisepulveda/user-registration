@@ -46,7 +46,7 @@ public class UserController {
 	@ApiResponse(responseCode = "201", description = "User created")
 	public ResponseEntity<UserCreatedResponse> registrarUsuario(@Valid @RequestBody CreateUserRequest request) {
 		User user = requestMapper.toDomain(request);
-		User registred = userService.registrarUsuario(user);
+		User registred = userService.registerUser(user);
 		UserCreatedResponse response = responseMapper.toResponse(registred);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}

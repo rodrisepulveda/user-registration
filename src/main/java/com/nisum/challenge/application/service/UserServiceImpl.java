@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
-	public User registrarUsuario(User user) {
+	public User registerUser(User user) {
 		if (userRepository.findByEmail(user.getEmail()).isPresent()) {
 			throw new EmailAlreadyExistsException("El correo ya esta registrado.");
 		}

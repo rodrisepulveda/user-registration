@@ -70,7 +70,7 @@ class UserControllerCreateUserTest {
 				persistedUser.getModified(), persistedUser.getLastLogin(), persistedUser.getToken(), true);
 
 		Mockito.when(requestMapper.toDomain(any(CreateUserRequest.class))).thenReturn(domainUser);
-		Mockito.when(userService.registrarUsuario(any(User.class))).thenReturn(persistedUser);
+		Mockito.when(userService.registerUser(any(User.class))).thenReturn(persistedUser);
 		Mockito.when(responseMapper.toResponse(any(User.class))).thenReturn(response);
 
 		// Act & Assert
@@ -158,7 +158,7 @@ class UserControllerCreateUserTest {
         );
 
         Mockito.when(requestMapper.toDomain(any(CreateUserRequest.class))).thenReturn(User.builder().build());
-        Mockito.when(userService.registrarUsuario(any(User.class)))
+        Mockito.when(userService.registerUser(any(User.class)))
                 .thenThrow(new EmailAlreadyExistsException("Email already registered"));
 
         // Act & Assert
