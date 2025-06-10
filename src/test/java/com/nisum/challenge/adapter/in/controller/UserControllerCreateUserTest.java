@@ -1,8 +1,6 @@
 package com.nisum.challenge.adapter.in.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,15 +22,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nisum.challenge.adapter.in.mapper.UserRequestMapper;
 import com.nisum.challenge.adapter.in.mapper.UserResponseMapper;
 import com.nisum.challenge.domain.exception.EmailAlreadyExistsException;
-import com.nisum.challenge.domain.exception.NotFoundException;
-import com.nisum.challenge.domain.model.Phone;
 import com.nisum.challenge.domain.model.User;
 import com.nisum.challenge.domain.service.UserService;
 import com.nisum.challenge.dto.CreateUserRequest;
 import com.nisum.challenge.dto.PhoneRequest;
-import com.nisum.challenge.dto.PhoneResponse;
 import com.nisum.challenge.dto.UserCreatedResponse;
-import com.nisum.challenge.dto.UserDetailsResponse;
 
 @WebMvcTest(UserController.class)
 @AutoConfigureMockMvc(addFilters = false)
