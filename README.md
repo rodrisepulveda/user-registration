@@ -24,7 +24,6 @@ Este proyecto es una API RESTful desarrollada como parte del desafío técnico d
 - JUnit 5
 - Mockito
 - Spring Validation
-- MapStruct (generación automática de mappers)
 - JaCoCo (para reporte de cobertura de tests)
 
 ## Arquitectura del Proyecto
