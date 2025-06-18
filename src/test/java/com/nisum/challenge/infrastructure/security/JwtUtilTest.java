@@ -11,17 +11,19 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.nisum.challenge.domain.service.TokenProvider;
+
 import io.jsonwebtoken.Claims;
 
 class JwtUtilTest {
 
-    private JwtUtil jwtUtil;
+    private  TokenProvider tokenProvider;
     private final String secret = "12345678901234567890123456789012"; // Debe tener al menos 32 bytes para HS256
     private final long expirationMillis = 3600000; // 1 hora
 
     @BeforeEach
     void setUp() {
-        jwtUtil = new JwtUtil(secret, expirationMillis);
+    	tokenProvider = new JwtUtil(secret, expirationMillis);
     }
 
     @Test
@@ -29,12 +31,12 @@ class JwtUtilTest {
         UUID userId = UUID.randomUUID();
         String email = "test@correo.com";
 
-        String token = jwtUtil.generateToken(userId, email);
+        String token = tokenProvider.generateToken(userId, email);
 
         assertNotNull(token);
-        assertTrue(jwtUtil.isTokenValid(token));
+        assertTrue(tokenProvider.isTokenValid(token));
 
-        Claims claims = jwtUtil.getClaims(token);
+        Claims claims = tokenProvider.getClaims(token);
         assertEquals(email, claims.getSubject());
         assertEquals(userId.toString(), claims.get("userId"));
     }
@@ -43,7 +45,7 @@ class JwtUtilTest {
     void isTokenValid_tokenInvalido_retornaFalse() {
         String tokenInvalido = "este-no-es-un-token";
 
-        boolean esValido = jwtUtil.isTokenValid(tokenInvalido);
+        boolean esValido = tokenProvider.isTokenValid(tokenInvalido);
 
         assertFalse(esValido);
     }
@@ -52,6 +54,6 @@ class JwtUtilTest {
     void getClaims_tokenInvalido_lanzaExcepcion() {
         String tokenInvalido = "invalido";
 
-        assertThrows(Exception.class, () -> jwtUtil.getClaims(tokenInvalido));
+        assertThrows(Exception.class, () -> tokenProvider.getClaims(tokenInvalido));
     }
 }
