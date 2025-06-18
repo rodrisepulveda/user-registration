@@ -25,7 +25,7 @@ class DatabaseEngineIntegrationTest extends IntegrationTestBase {
         try (Connection conn = dataSource.getConnection()) {
             String product = conn.getMetaData().getDatabaseProductName();
             System.out.println("Database Engine: " + product);
-            // Esto va a FALLAR si la base NO es PostgreSQL
+            // Esto va a FALLAR si la base de datos con la que se ejecutan los tests NO es PostgreSQL
             assertThat(product).isEqualTo("PostgreSQL");
         }
     }
