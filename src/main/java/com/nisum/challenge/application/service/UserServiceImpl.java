@@ -12,8 +12,8 @@ import com.nisum.challenge.domain.exception.EmailAlreadyExistsException;
 import com.nisum.challenge.domain.exception.NotFoundException;
 import com.nisum.challenge.domain.model.User;
 import com.nisum.challenge.domain.repository.UserRepositoryPort;
+import com.nisum.challenge.domain.service.TokenProvider;
 import com.nisum.challenge.domain.service.UserService;
-import com.nisum.challenge.infrastructure.security.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 
 	private final UserRepositoryPort userRepository;
-	private final JwtUtil jwtUtil;
+	private final TokenProvider tokenProvider;
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
 		UUID id = UUID.randomUUID();
 		LocalDateTime now = LocalDateTime.now();
-		String token = jwtUtil.generateToken(id, user.getEmail());
+		String token = tokenProvider.generateToken(id, user.getEmail());
 
 		user.setId(id);
 		user.setCreated(now);

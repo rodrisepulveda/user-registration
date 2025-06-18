@@ -9,7 +9,7 @@ import com.nisum.challenge.domain.exception.AuthenticationException;
 import com.nisum.challenge.domain.model.User;
 import com.nisum.challenge.domain.repository.UserRepositoryPort;
 import com.nisum.challenge.domain.service.AuthenticationService;
-import com.nisum.challenge.infrastructure.security.JwtUtil;
+import com.nisum.challenge.domain.service.TokenProvider;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +19,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	private final UserRepositoryPort userRepository;
 	private final PasswordEncoder passwordEncoder;
-	private final JwtUtil jwtUtil;
+	private final TokenProvider tokenProvider;
 
 	@Override
 	public User authenticate(String email, String password) {
@@ -34,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			throw new AuthenticationException("Invalid credentials");
 		}
 
-		String token = jwtUtil.generateToken(user.getId(), user.getEmail());
+		String token = tokenProvider.generateToken(user.getId(), user.getEmail());
 		user.setLastLogin(LocalDateTime.now());
 		user.setToken(token);
 		userRepository.save(user); // update lastLogin and token
