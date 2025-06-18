@@ -12,6 +12,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletResponse;
 
 class JwtAuthenticationEntryPointTest {
 
@@ -25,7 +26,7 @@ class JwtAuthenticationEntryPointTest {
         entryPoint.commence(request, response, new org.springframework.security.core.AuthenticationException("msg") {
         });
 
-        assertEquals(401, response.getStatus());
+        assertEquals(HttpServletResponse.SC_UNAUTHORIZED, response.getStatus());
         assertEquals("application/json", response.getContentType());
 
         String json = response.getContentAsString();

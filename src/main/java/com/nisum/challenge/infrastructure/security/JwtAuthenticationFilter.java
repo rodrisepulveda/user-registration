@@ -10,6 +10,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.nisum.challenge.domain.model.User;
 import com.nisum.challenge.domain.repository.UserRepositoryPort;
+import com.nisum.challenge.domain.service.TokenProvider;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-	private final JwtUtil jwtUtil;
+	private final TokenProvider tokenProvider;
 	private final UserRepositoryPort userRepository;
 
 	@Override
@@ -36,12 +37,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 		final String jwt = authHeader.substring(7);
 
-		if (!jwtUtil.isTokenValid(jwt)) {
+		if (!tokenProvider.isTokenValid(jwt)) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 
-		var claims = jwtUtil.getClaims(jwt);
+		var claims = tokenProvider.getClaims(jwt);
 		var userId = claims.get("userId", String.class);
 
 		User user = userRepository.findById(UUID.fromString(userId)).orElse(null);
