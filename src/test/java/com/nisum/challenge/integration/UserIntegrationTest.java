@@ -25,7 +25,7 @@ import com.nisum.challenge.dto.PhoneRequest;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-class UserIntegrationTest {
+class UserIntegrationTest{
 
     @Autowired
     private MockMvc mockMvc;
