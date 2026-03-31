@@ -35,7 +35,7 @@ Se aplicaron los **principios SOLID**, priorizando mantenibilidad, testabilidad 
 
 ## Funcionalidades Implementadas
 
-- Registro de usuarios con validaciones complejas y lista de teléfonos.
+- Registro de usuarios con validaciones y lista de teléfonos.
 - Autenticación por email y contraseña, con emisión de token JWT.
 - Validación de usuarios autenticados en endpoints protegidos.
 - Cambiar estado activo/inactivo del usuario.
